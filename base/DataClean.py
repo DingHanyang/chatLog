@@ -81,8 +81,6 @@ def work():
                 for li in '0123456789':
                     time = time.replace(' ' + li + ':', ' 0' + li + ':')
 
-
-
                 post.insert_one({'_id': id, 'time': time, 'ID': ID, 'name': name,
                                  'text': chatlog_list[last + 1:pos]})
                 id += 1
