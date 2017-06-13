@@ -79,27 +79,10 @@ class interesting:
 
         return top_list
 
-    def max_sharePhotos(self):
-        '''
-        所有记录中,发送图片最多的人排行
-        :return:top_list[(ID,name,num),(...,...,...),...] 按从多到少排序
-        '''
-
-
-
-
-
-
-
-
-
-
-
     def close(self):
         self.client.close()
 
 
 if __name__ == '__main__':
     ycst = interesting()
-    ycst.longest_formation()
     ycst.close()
