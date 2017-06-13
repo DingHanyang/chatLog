@@ -28,6 +28,7 @@ def judge(str):
 def work():
 
     '''
+    腾讯导出的聊天记录是UTF-8+bom的 手动改成 -bom
     进行数据清洗,将原始数据划分成块保存进mongodb中
     ..note::例子
         time:YYYY-MM-DD HH-MM-SS
@@ -47,6 +48,7 @@ def work():
             chatlog_list.append(line.strip())
     fp.close()
 
+    print(len(chatlog_list))
     pos = 0 # 当前分析位置
     last =0 # 上一个行首位置
     flag = 0
@@ -55,7 +57,7 @@ def work():
     while pos < len(chatlog_list):
         if judge(str(chatlog_list[pos])):
             if flag == 0:
-                tup = judge(str(chatlog_list[pos]))  # bug
+                tup = judge(str(chatlog_list[pos]))
                 last = pos
                 flag = 1
             else:
@@ -87,8 +89,8 @@ def work():
                 print('time:', time, "ID:", ID, 'name:', name)
                 print(chatlog_list[last + 1:pos])
                 print("------------------------------------------------")
+                continue
         pos += 1
-
     client.close()
 
 if __name__ == '__main__':
