@@ -6,9 +6,10 @@
 from pymongo import MongoClient
 from datetime import datetime
 
-class userProfile():
+
+class userProfile:
     def __init__(self):
-        print("正在初始化用户画像构建模块")
+        print("正在初始化用户画像模块")
         self.client = MongoClient()  # 默认连接 localhost 27017
         self.db = self.client.chatlog
         self.post = self.db.vczh
@@ -67,23 +68,22 @@ class userProfile():
 
     def get_online_time(self, ID):
         """
-        返回一个用户在那个时段发言数最多(0-24小时)
+        返回一个用户在那个时段发言数最多(0-24小时)(周1-7)
         :param ID:用户ID
-        :return:[nums,nums,nums,...,nums] 下标0-23表示时间 [nums,nums,...,nums] 下标1-7表示周一到周日
+        :return:[[0,0,0,0],[],[],[],...] [周1-7]包含[0-24小时]
         """
         time_list = []
         for li in self.res_list:
             if li['ID'] == ID:
                 time_list.append(li['time'])
 
-        week = [0 for i in range(7)]
-        day = [0 for i in range(24)]
+        week = [[0 for i in range(24)] for i in range(7)]
+
 
         for li in time_list:
-            week[int(datetime.strptime(li, "%Y-%m-%d %H:%M:%S").weekday())] += 1
-            day[int(li[11:13])] += 1
+            week[int(datetime.strptime(li, "%Y-%m-%d %H:%M:%S").weekday())][int(li[11:13])] += 1
 
-        return week, day
+        return week
 
     def analyse_all_profile(self):
         """
@@ -98,26 +98,26 @@ class userProfile():
             day_online:日活跃分布
         :return:None
         """
-        post=self.db.profile
-        ID_list=self.get_ID_list()
+        post = self.db.profile
+        ID_list = self.get_ID_list()
         for li in ID_list:
-            print('正在构建用户',li,'的用户画像')
-            name_list=self.get_all_name(li)
-            speak_num,word_num,photo_num=self.get_speak_infos(li)
-            week_online,day_online=self.get_online_time(li)
-            ban_time=self.ban_time(li)
-            dict={'ID':li,'name_list':name_list,'speak_num':speak_num,
-                  'word_num':word_num,'photo_num':photo_num,
-                  'week_online':week_online,'day_online':day_online,'ban_time':ban_time}
+            print('正在构建用户', li, '的用户画像')
+            name_list = self.get_all_name(li)
+            speak_num, word_num, photo_num = self.get_speak_infos(li)
+            week_online= self.get_online_time(li)
+            ban_time = self.ban_time(li)
+            dict = {'ID': li, 'name_list': name_list, 'speak_num': speak_num,
+                    'word_num': word_num, 'photo_num': photo_num,
+                    'week_online': week_online,'ban_time': ban_time}
             post.insert_one(dict)
 
-    #TODO 管理员若解禁则扣除时间
-    def ban_time(self,ID):
+    # TODO 管理员若解禁则扣除时间
+    def ban_time(self, ID):
         '''
         统计用户累计禁言时间
         :return:
         '''
-        name_list=self.get_all_name(ID)
+        name_list = self.get_all_name(ID)
         res_list = []
         for li in self.post.find({'ID': '10000'}, {'text': 1}):
             if '被管理员禁言' in li['text'][0]:
@@ -134,15 +134,13 @@ class userProfile():
                     time += int(li[:-1]) * 60 * 24
             return time
 
-        time_list=[]
+        time_list = []
         for li in res_list:
             for name in name_list:
                 if li[0] == name:
                     time_list.append(li[1])
 
         return add_time(time_list)
-
-
 
 
 if __name__ == '__main__':

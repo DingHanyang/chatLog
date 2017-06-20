@@ -24,8 +24,8 @@ class individual:
 
         top_list = sorted(top_list, key=lambda x: x[2], reverse=True)  # 从大到小排序
 
-        for li in top_list:
-            print(li[0], li[1],li[2])
+        # for li in top_list:
+        #     print(li[0], li[1],li[2])
 
         return top_list
 
