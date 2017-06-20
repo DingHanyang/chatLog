@@ -3,8 +3,9 @@
     构建用户基本画像
     @author:DingHanyang
 '''
-from pymongo import MongoClient
 from datetime import datetime
+
+from pymongo import MongoClient
 
 
 class userProfile:
@@ -85,7 +86,7 @@ class userProfile:
 
         return week
 
-    def analyse_all_profile(self):
+    def work(self):
         """
         分析所有用户基本画像并存入数据库
         ..note::
@@ -110,6 +111,7 @@ class userProfile:
                     'word_num': word_num, 'photo_num': photo_num,
                     'week_online': week_online,'ban_time': ban_time}
             post.insert_one(dict)
+        self.close()
 
     # TODO 管理员若解禁则扣除时间
     def ban_time(self, ID):
@@ -145,5 +147,5 @@ class userProfile:
 
 if __name__ == '__main__':
     userProfile = userProfile()
-    userProfile.analyse_all_profile()
+    userProfile.work()
     userProfile.close()

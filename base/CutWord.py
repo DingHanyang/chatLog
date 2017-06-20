@@ -1,7 +1,9 @@
 # -*- coding=utf-8 -*-
 from collections import Counter
+
 import jieba
 from pymongo import MongoClient
+
 
 class cutword():
     def __init__(self):
@@ -9,7 +11,7 @@ class cutword():
         self.db = self.client.chatlog
         self.post = self.db.vczh
 
-    def cut(self):
+    def work(self):
         stopword_list=[]
         fp = open('chinese_stopword.txt','r',encoding='utf-8')
         for line in fp.readlines():
@@ -27,6 +29,7 @@ class cutword():
                 print(key)
                 continue
             self.post.insert({'word':key,'item':word_dict[key]})
+        self.close()
 
     def close(self):
         self.client.close()
@@ -34,5 +37,5 @@ class cutword():
 
 if __name__ == '__main__':
     cut =cutword()
-    cut.cut()
+    cut.work()
     cut.close()
