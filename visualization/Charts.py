@@ -33,19 +33,18 @@ class charts():
         for id in ID_list:
             for doc in self.post.find({'ID': id}, {'photo_num': 1}):
                 photo_num.append(doc['photo_num'])
-
         sns.set(style="darkgrid")
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体
-        f, ax = plt.subplots(figsize=(10, 15))
+        f, ax = plt.subplots(figsize=(18.5, 9))
 
         sns.set_color_codes("pastel")
         sns.barplot(x=speak_list, y=name_list,
-                    label="发送图片数", color="b")
+                    label="发言次数", color="b")
 
         # Plot the crashes where alcohol was involved
         sns.set_color_codes("muted")
         sns.barplot(x=photo_num, y=name_list,
-                    label="发言次数", color="b")
+                    label="发送图片数", color="b")
 
         # Add a legend and informative axis label
         ax.legend(ncol=2, loc="lower right", frameon=True)
@@ -53,7 +52,8 @@ class charts():
                xlabel="群里发言次数排行及发送图片的比例")
         sns.despine(left=True, bottom=True)
 
-        plt.show()
+        plt.savefig('../photos/speak_photo_in_total.png', format='png', dpi=300)
+        plt.close()
 
     def user_online_time(self, ID=None):
         '''
@@ -83,18 +83,24 @@ class charts():
         index = ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.']
 
         week_online = pd.DataFrame(week_online, index=index, columns=columns)
-
+        plt.figure(figsize=(18.5, 9))
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体
         sns.set()
 
         # Draw a heatmap with the numeric values in each cell
         sns.heatmap(week_online, annot=True, fmt="d", cmap="YlGnBu")
-        plt.show()
+        plt.savefig('../photos/user_time_online.png', format='png', dpi=300)
+        plt.close()
+
 
     def close(self):
         self.client.close()
 
+    def work(self):
+        self.speak_photo_in_total()
+        self.user_online_time()
+        self.close()
 
 if __name__ == '__main__':
     chart = charts()
-    chart.user_online_time()
+    chart.work()
