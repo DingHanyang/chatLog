@@ -46,7 +46,7 @@ class dataclean():
         db = client.chatlog
         post = db.vczh
 
-        fp = open('../chatlog.txt', 'r', encoding='utf-8')
+        fp = open('../run/chatlog.txt', 'r', encoding='utf-8')
         chatlog_list = []
         for line in fp.readlines():
             if line.strip() != "":
@@ -79,6 +79,7 @@ class dataclean():
 
                     # 为什么会有人取名叫   【狗】【熊】吉！！！！！
                     # 由于等级标签有极大部分缺失，所以直接去除
+                    # TODO:消息中大频率出现的标签应该就是等级标签，应自检测
                     for i in ['【一见倾心】', '【风华绝代】', '【富甲一方】', '【超凡脱俗】', '【蛆】', '【渣】',
                               '【狗】', '【鹅】', '【熊】', '【毛子】', '【管理员】', '【群主】', '【仓鼠】']:
                         if name[:len(i)] == i:

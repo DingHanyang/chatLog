@@ -13,7 +13,7 @@ class cutword():
 
     def work(self):
         stopword_list=[]
-        fp = open('chinese_stopword.txt','r',encoding='utf-8')
+        fp = open('../base/chinese_stopword.txt', 'r', encoding='utf-8')
         for line in fp.readlines():
             stopword_list.append(line.replace('\n',''))
         fp.close()
