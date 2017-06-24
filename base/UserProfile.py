@@ -128,12 +128,13 @@ class userProfile:
         def add_time(time_list):
             time = 0
             for li in time_list:
-                if '分钟' in li:
-                    time += int(li[:-2])
-                elif '小时' in li:
-                    time += int(li[:-2]) * 60
-                elif '天' in li:
-                    time += int(li[:-1]) * 60 * 24
+                for info in [('天', 60 * 24), ('小时', 60), ('分钟', 1)]:
+                    if info[0] in li:
+                        index = li.find(info[0])
+                        if li[index - 2].isdigit():
+                            time += int(li[index - 2:index]) * info[1]
+                        else:
+                            time += int(li[index - 1:index]) * info[1]
             return time
 
         time_list = []
