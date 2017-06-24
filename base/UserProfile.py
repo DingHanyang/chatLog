@@ -145,7 +145,6 @@ class userProfile:
 
         return add_time(time_list)
 
-
 if __name__ == '__main__':
     userProfile = userProfile()
     userProfile.work()
