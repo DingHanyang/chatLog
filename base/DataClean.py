@@ -1,14 +1,14 @@
 # -*- coding=utf-8 -*-
-'''
+"""
     对导出的聊天记录进行数据清洗
     @author:DingHanyang
-'''
+"""
 import re
 
 from pymongo import MongoClient
 
 
-class dataclean():
+class dataclean(object):
     def __init__(self):
 
         # 初始化两个常用正则
@@ -19,19 +19,19 @@ class dataclean():
             r"[(][1-9]\d{4,}[)]$|[<][A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}[>]$")
 
     def judge(self, str):
-        '''
+        """
         判断某行是不是起始行
         条件1:YYYY-MM-DD HH-MM-SS开头(长度大于19)
         条件2::(XXXXXXXXX)或者<xxx@xxx.xxx>结尾
         :param str:一行记录
         :return: None or (time,ID)
-        '''
+        """
         if len(str) > 19 and (self.time_pattern.match(str)) and (self.ID_pattern.search(str)):
             return self.time_pattern.search(str).group(), self.ID_pattern.search(str).group()
 
     def work(self):
 
-        '''
+        """
         腾讯导出的聊天记录是UTF-8+bom的 手动改成 -bom
         进行数据清洗,将原始数据划分成块保存进mongodb中
         ..note::例子
@@ -39,7 +39,7 @@ class dataclean():
             ID:(XXXXXXXXX)或者<xxx@xxx.xxx>
             name:username
             text:['sentence1','sentence2',...]
-        '''
+        """
         print('----------正在进行数据清洗-------------')
 
         client = MongoClient()  # 默认连接 localhost 27017
@@ -70,7 +70,7 @@ class dataclean():
                     time = tup[0]
                     ID = tup[1]
                     # 如果什么消息都没发直接不插入
-                    if chatlog_list[last + 1:pos] == []:
+                    if not chatlog_list[last + 1:pos]:
                         continue
 
                     for i in '()<>':

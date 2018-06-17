@@ -1,7 +1,7 @@
 # -*- coding=utf-8 -*-
-'''
+"""
     数据可视化模块
-'''
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -17,11 +17,37 @@ class charts():
         self.db = self.client.chatlog
         self.post = self.db.profile
 
+    def ban_time(self):
+        ind = individual()
+        res_list = ind.longest_ban()
+        res_list = res_list[0:10]
+        print(res_list)
+        name_list = [i[1] for i in res_list]
+        time_list = [i[2] for i in res_list]
+
+        sns.set(style="darkgrid")
+        plt.rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体
+        f, ax = plt.subplots(figsize=(18.5, 9))
+
+        # Plot the crashes where alcohol was involved
+        sns.set_color_codes("muted")
+        sns.barplot(x=time_list, y=name_list,
+                    label="禁言时长", color="y")
+
+        # Add a legend and informative axis label
+        ax.legend(ncol=2, loc="lower right", frameon=True)
+        ax.set(xlim=(0, time_list[0]), ylabel="",
+               xlabel="禁言时间最长")
+        sns.despine(left=True, bottom=True)
+
+        plt.savefig('../photos/ban_time.png', format='png', dpi=400)
+        plt.close()
+
     def speak_photo_in_total(self):
-        '''
+        """
         发言次数前10的用户及发送图片的比例
         :return:
-        '''
+        """
         ind = individual()
         res_list = ind.most_speak('speak_num')
         res_list = res_list[0:10]
@@ -92,7 +118,6 @@ class charts():
         plt.savefig('../photos/user_time_online.png', format='png', dpi=300)
         plt.close()
 
-
     def close(self):
         self.client.close()
 
@@ -101,6 +126,7 @@ class charts():
         self.user_online_time()
         self.close()
 
+
 if __name__ == '__main__':
     chart = charts()
-    chart.work()
+    chart.user_online_time()

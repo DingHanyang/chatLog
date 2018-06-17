@@ -85,4 +85,5 @@ class interesting:
 
 if __name__ == '__main__':
     ycst = interesting()
+    print(ycst.longest_formation())
     ycst.close()

@@ -1,4 +1,3 @@
-# -*- coding=utf-8 -*-
 from collections import Counter
 
 import jieba
@@ -12,10 +11,10 @@ class cutword():
         self.post = self.db.vczh
 
     def work(self):
-        stopword_list=[]
+        stopword_list = []
         fp = open('../base/chinese_stopword.txt', 'r', encoding='utf-8')
         for line in fp.readlines():
-            stopword_list.append(line.replace('\n',''))
+            stopword_list.append(line.replace('\n', ''))
         fp.close()
 
         word_list = []
@@ -28,7 +27,7 @@ class cutword():
             if str(key) in stopword_list:
                 print(key)
                 continue
-            self.post.insert({'word':key,'item':word_dict[key]})
+            self.post.insert({'word': key, 'item': word_dict[key]})
         self.close()
 
     def close(self):
@@ -36,6 +35,6 @@ class cutword():
 
 
 if __name__ == '__main__':
-    cut =cutword()
+    cut = cutword()
     cut.work()
     cut.close()

@@ -30,7 +30,7 @@ class wordcloud():
         image_colors = ImageColorGenerator(cat_mask)
         # recolor wordcloud and show
         # we could also give color_func=image_colors directly in the constructor
-        plt.imshow(wc.recolor(color_func=image_colors), interpolation="bilinear")
+        plt.imshow(wc)
         plt.axis("off")
         plt.savefig('../photos/' + name + '.png', dpi=800)
         plt.close()
@@ -52,7 +52,8 @@ class wordcloud():
         word_dict = {'Microsoft': ['微软', '巨硬', 'ms', 'microsoft'], 'Tencent': ['腾讯', 'tencent', '鹅厂'],
                      '360': ['360', '安全卫士', '奇虎'], 'Netease': ['netease', '网易', '猪场'],
                      'JD': ['jd', '京东', '某东', '狗东'], 'Taobao': ['淘宝', '天猫', 'taobao'],
-                     'BaiDu': ['百度', '某度', 'baidu'], 'ZhiHu': ['zhihu', '知乎', '你乎', '某乎']}
+                     'BaiDu': ['百度', '某度', 'baidu'], 'ZhiHu': ['zhihu', '知乎', '你乎', '某乎'],
+                     'Sina': ['新浪', 'sina', '微博', 'weibo']}
 
         self.draw_wordcloud(self.word_fre(word_dict), sys._getframe().f_code.co_name)
 
@@ -72,12 +73,39 @@ class wordcloud():
 
         return word_fre
 
+    def longest_formation_wordcloud(self):
+        word_dict = {}
+        fp = open('../visualization/list.txt', 'r')
+        for line in fp.readlines():
+            li = line.split('  ')
+            print(li)
+            word_dict[li[0]] = int(li[1])
+
+        wc = WordCloud(font_path='../visualization/msyh.ttc',
+                       width=1080, height=720,
+                       background_color="white",  # 背景颜色
+                       min_font_size=6
+                       )
+        wc.fit_words(word_dict)
+        plt.imshow(wc)
+        plt.axis("off")
+        plt.savefig('../photos/' + sys._getframe().f_code.co_name + '.png', dpi=800)
+        plt.show()
+        plt.close()
+
+
+
+
+
+
+
     def work(self):
         self.PL_wordcloud()
         self.company_wordcloud()
         self.all_wordcloud()
+        self.close()
 
 
 if __name__ == '__main__':
     word = wordcloud()
-    word.all_wordcloud()
+    word.company_wordcloud()
