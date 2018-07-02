@@ -1,6 +1,6 @@
 from .CutWord import cutword
-from .DataClean import dataclean
 from .UserProfile import userProfile
+from .read_chatlog import dataclean
 
 
 def work():
