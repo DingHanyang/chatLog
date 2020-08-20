@@ -1,5 +1,4 @@
 import re
-
 from pymongo import MongoClient
 
 from chatlog.base import constant
@@ -85,4 +84,3 @@ class ReadChatlog(object):
             now_cursor += 1
         self.client.close()
         print('----------数据清洗完成-------------')
-

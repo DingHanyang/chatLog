@@ -1,8 +1,7 @@
-# -*- coding=utf-8 -*-
-'''
+"""
     总体数据统计分析
     @author:DingHanyang
-'''
+"""
 from pymongo import MongoClient
 
 
@@ -24,12 +23,13 @@ class collecticity:
             week_online = [i + j for i, j in zip(week_online, doc['week_online'])]
             day_online = [i + j for i, j in zip(day_online, doc['day_online'])]
 
-        return week_online,day_online
+        return week_online, day_online
 
     def close(self):
         self.client.close()
 
+
 if __name__ == '__main__':
-    col=collecticity()
+    col = collecticity()
     print(col.get_all_speak_info())
     col.close()

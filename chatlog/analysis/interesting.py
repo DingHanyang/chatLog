@@ -1,12 +1,11 @@
-# -*- coding=utf-8 -*-
-'''
+"""
     因吹斯听 分析及统计
     @author:DingHanyang
-'''
+"""
 from pymongo import MongoClient
 
 
-class interesting:
+class Interesting(object):
     def __init__(self):
         self.client = MongoClient()  # 默认连接 localhost 27017
         self.db = self.client.chatlog
@@ -55,7 +54,7 @@ class interesting:
                     if res_list[pos][0] == res_list[pos + 1][0]:
                         pos += 1
                     else:
-                        if (pos - i + 1 > 2):
+                        if pos - i + 1 > 2:
                             top_list.append((res_list[i][0], pos - i + 1))
                         i = pos + 1
                         break
@@ -84,6 +83,6 @@ class interesting:
 
 
 if __name__ == '__main__':
-    ycst = interesting()
+    ycst = Interesting()
     print(ycst.longest_formation())
     ycst.close()

@@ -1,10 +1,9 @@
 from collections import Counter
-
 import jieba
 from pymongo import MongoClient
 
 
-class cutword():
+class SegWord(object):
     def __init__(self):
         self.client = MongoClient()  # 默认连接 localhost 27017
         self.db = self.client.chatlog
@@ -35,6 +34,6 @@ class cutword():
 
 
 if __name__ == '__main__':
-    cut = cutword()
+    cut = SegWord()
     cut.work()
     cut.close()
