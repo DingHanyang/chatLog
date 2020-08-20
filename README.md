@@ -13,7 +13,7 @@ just a toy.
 
 ## 安装说明
 
-python版本：`3.6`
+python版本：`3.6.x`
 
 系统平台：`windows`
 
