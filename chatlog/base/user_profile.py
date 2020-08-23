@@ -118,14 +118,14 @@ class UserProfile:
 
         def add_time(time_list):
             time = 0
-            for li in time_list:
+            for times in time_list:
                 for info in [('天', 60 * 24), ('小时', 60), ('分钟', 1)]:
-                    if info[0] in li:
-                        index = li.find(info[0])
-                        if li[index - 2].isdigit():
-                            time += int(li[index - 2:index]) * info[1]
+                    if info[0] in times:
+                        index = times.find(info[0])
+                        if times[index - 2].isdigit():
+                            time += int(times[index - 2:index]) * info[1]
                         else:
-                            time += int(li[index - 1:index]) * info[1]
+                            time += int(times[index - 1:index]) * info[1]
             return time
 
         time_list = []
