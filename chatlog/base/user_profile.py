@@ -71,7 +71,7 @@ class UserProfile:
             if li['ID'] == user_id:
                 time_list.append(li['time'])
 
-        week = [[0 for i in range(24)] for i in range(7)]
+        week = [[0]*24]*7
 
         for li in time_list:
             week[int(datetime.strptime(li, "%Y-%m-%d %H:%M:%S").weekday())][int(li[11:13])] += 1
