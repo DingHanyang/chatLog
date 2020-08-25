@@ -8,17 +8,17 @@ import pandas as pd
 import seaborn as sns
 from pymongo import MongoClient
 
-from chatlog.analysis.Individual import individual
+from chatlog.analysis.individual import Individual
 
 
-class charts():
+class Charts(object):
     def __init__(self):
         self.client = MongoClient()  # 默认连接 localhost 27017
         self.db = self.client.chatlog
         self.post = self.db.profile
 
     def ban_time(self):
-        ind = individual()
+        ind = Individual()
         res_list = ind.longest_ban()
         res_list = res_list[0:10]
         print(res_list)
@@ -48,7 +48,7 @@ class charts():
         发言次数前10的用户及发送图片的比例
         :return:
         """
-        ind = individual()
+        ind = Individual()
         res_list = ind.most_speak('speak_num')
         res_list = res_list[0:10]
         print(res_list)
@@ -128,5 +128,5 @@ class charts():
 
 
 if __name__ == '__main__':
-    chart = charts()
+    chart = Charts()
     chart.user_online_time()

@@ -20,24 +20,19 @@ class Interesting(object):
         res_list = []
         for doc in self.post.find({}, {'name': 1}):
             res_list.append(doc['name'])
-        res_list = {}.fromkeys(res_list).keys()  # 去重
+        res_list = {}.fromkeys(res_list).keys()
 
         top_list = []
         for li in res_list:
-            top_list.append((li, len(li)))  # 统计长度
+            top_list.append((li, len(li)))
 
-        top_list = sorted(top_list, key=lambda x: x[1], reverse=True)  # 从大到小排序
-
-        for li in top_list:
-            print(li[0], li[1])
-
-        return top_list
+        return sorted(top_list, key=lambda x: x[1], reverse=True)
 
     def longest_formation(self):
-        '''
+        """
         所有记录中,跟队形最长的聊天记录。
         :return:top_list[('text',len(text)),(...,...),...] 按长度从大到小排序
-        '''
+        """
         res_list = []
         for doc in self.post.find({}, {'text': 1}):
             res_list.append(doc['text'])
@@ -70,19 +65,7 @@ class Interesting(object):
                 top_list.pop(k)
             else:
                 k += 1
-
-        top_list = sorted(top_list, key=lambda x: x[1], reverse=True)  # 从大到小排序
-
-        for li in top_list:
-            print(li[0], li[1])
-
-        return top_list
+        return sorted(top_list, key=lambda x: x[1], reverse=True)
 
     def close(self):
         self.client.close()
-
-
-if __name__ == '__main__':
-    ycst = Interesting()
-    print(ycst.longest_formation())
-    ycst.close()

@@ -32,8 +32,3 @@ class SegWord(object):
     def close(self):
         self.client.close()
 
-
-if __name__ == '__main__':
-    cut = SegWord()
-    cut.work()
-    cut.close()

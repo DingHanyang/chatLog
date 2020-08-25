@@ -1,4 +1,3 @@
-# -*- coding=utf-8 -*-
 import sys
 
 import matplotlib.pyplot as plt
@@ -8,7 +7,7 @@ from pymongo import MongoClient
 from wordcloud import WordCloud, ImageColorGenerator
 
 
-class wordcloud():
+class WordImg(object):
     def __init__(self):
         self.client = MongoClient()  # 默认连接 localhost 27017
         self.db = self.client.chatlog
@@ -105,7 +104,3 @@ class wordcloud():
         self.all_wordcloud()
         self.close()
 
-
-if __name__ == '__main__':
-    word = wordcloud()
-    word.company_wordcloud()

@@ -71,12 +71,12 @@ class UserProfile:
             if li['ID'] == user_id:
                 time_list.append(li['time'])
 
-        week = [[0]*24]*7
+        week_list = [[0] * 24] * 7
 
         for li in time_list:
-            week[int(datetime.strptime(li, "%Y-%m-%d %H:%M:%S").weekday())][int(li[11:13])] += 1
+            week_list[int(datetime.strptime(li, "%Y-%m-%d %H:%M:%S").weekday())][int(li[11:13])] += 1
 
-        return week
+        return week_list
 
     def work(self):
         """
@@ -110,15 +110,10 @@ class UserProfile:
         统计用户累计禁言时间
         :return:
         """
-        name_list = self.get_all_name(user_id)
-        res_list = []
-        for li in self.post.find({'ID': '10000'}, {'text': 1}):
-            if '被管理员禁言' in li['text'][0]:
-                res_list.append(li['text'][0].split(' 被管理员禁言'))
 
-        def add_time(time_list):
+        def add_time(add_list):
             time = 0
-            for times in time_list:
+            for times in add_list:
                 for info in [('天', 60 * 24), ('小时', 60), ('分钟', 1)]:
                     if info[0] in times:
                         index = times.find(info[0])
@@ -128,6 +123,12 @@ class UserProfile:
                             time += int(times[index - 1:index]) * info[1]
             return time
 
+        name_list = self.get_all_name(user_id)
+        res_list = []
+        for li in self.post.find({'ID': '10000'}, {'text': 1}):
+            if '被管理员禁言' in li['text'][0]:
+                res_list.append(li['text'][0].split(' 被管理员禁言'))
+
         time_list = []
         for li in res_list:
             for name in name_list:
@@ -135,5 +136,3 @@ class UserProfile:
                     time_list.append(li[1])
 
         return add_time(time_list)
-
-
