@@ -15,7 +15,7 @@ class ReadChatlog(object):
         self.time_pattern = re.compile(constant.JUDGE_TIME_RE)
         self.ID_pattern = re.compile(constant.JUDGE_ID_RE)
 
-    def judge_start_line(self, message):
+    def _judge_start_line(self, message):
         """
         判断某行是不是起始行
         条件1:YYYY-MM-DD HH-MM-SS开头(长度大于19)
@@ -44,11 +44,11 @@ class ReadChatlog(object):
         now_cursor = 0  # 当前分析位置
         last = 0  # 上一个行首位置
         flag = 0
-        first_line_info = self.judge_start_line(str(chatlog_list[now_cursor]))
+        first_line_info = self._judge_start_line(str(chatlog_list[now_cursor]))
         while now_cursor < len(chatlog_list):
-            if self.judge_start_line(str(chatlog_list[now_cursor])):
+            if self._judge_start_line(str(chatlog_list[now_cursor])):
                 if not flag:
-                    first_line_info = self.judge_start_line(str(chatlog_list[now_cursor]))
+                    first_line_info = self._judge_start_line(str(chatlog_list[now_cursor]))
                     last = now_cursor
                     flag = 1
                 else:

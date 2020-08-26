@@ -81,28 +81,25 @@ class Charts(object):
         plt.savefig('../photos/speak_photo_in_total.png', format='png', dpi=300)
         plt.close()
 
-    def user_online_time(self, ID=None):
-        '''
+    def user_online_time(self, user_ID=None):
+        """
         绘制(全体)用户活跃时间图像
-        :param ID:默认为空,指定全体用户,不为空时为指定ID用户
-        '''
+        :param user_ID:默认为空,指定全体用户,不为空时为指定ID用户
+        """
         res_list = []
-        if ID:
-            find_dict = {'ID': ID}
+        if user_ID:
+            find_dict = {'ID': user_ID}
         else:
             find_dict = {}
 
+        week_online = [[0 for _ in range(24)] for _ in range(7)]
         for doc in self.post.find(find_dict, {'week_online': 1}):
-            res_list.append(doc['week_online'])
-
-        week_online = [[0 for i in range(24)] for i in range(7)]
-        for li in res_list:
             for i in range(0, 7):
                 for j in range(0, 24):
-                    if ID:
-                        week_online[i][j] = li[i][j]
+                    if user_ID:
+                        week_online[i][j] = doc['week_online'][i][j]
                     else:
-                        week_online[i][j] += li[i][j]
+                        week_online[i][j] += doc['week_online'][i][j]
 
         week_online = np.array([li for li in week_online])
         columns = [str(i) + '-' + str(i + 1) for i in range(0, 24)]

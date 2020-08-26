@@ -11,10 +11,10 @@ class Individual(object):
         self.db = self.client.chatlog
         self.post = self.db.profile
 
-    def most_speak(self, send_class):
+    def most_speak(self, send_class='speak_num'):
         """
         发言次数最多、发送字数最多、发送图片最多的用户排行
-        :param send_class:选择 word_num,speak_num,photo_num
+        :param send_class:选择 speak_num,word_num,photo_num
         :return:[(ID1,name1,num),(ID1,name2,num),...]
         """
         top_list = []

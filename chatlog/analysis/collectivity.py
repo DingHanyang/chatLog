@@ -2,6 +2,7 @@
     总体数据统计分析
     @author:DingHanyang
 """
+import numpy
 from pymongo import MongoClient
 
 
@@ -17,15 +18,11 @@ class Collectivity(object):
         :return:
         """
         post = self.db.profile
-        week_online = [0] * 7
-        day_online = [0] * 24
-        for doc in post.find({}, {'day_online': 1, 'week_online': 1}):
-            week_online = [i + j for i, j in zip(week_online, doc['week_online'])]
-            day_online = [i + j for i, j in zip(day_online, doc['day_online'])]
+        week_online = numpy.zeros((7, 24), dtype=numpy.int)
+        for doc in post.find({}, {'week_online': 1}):
+            week_online += numpy.array(doc['week_online'])
 
-        return week_online, day_online
+        return week_online.tolist()
 
     def close(self):
         self.client.close()
-
-

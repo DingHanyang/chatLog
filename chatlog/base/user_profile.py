@@ -18,7 +18,7 @@ class UserProfile:
     def close(self):
         self.client.close()
 
-    def get_user_id_list(self):
+    def _get_user_id_list(self):
         """
         获取记录中所有ID的列表
         :return:[id1,id2,id3,...]
@@ -30,7 +30,7 @@ class UserProfile:
 
         return user_id_list
 
-    def get_all_name(self, user_id):
+    def _get_all_name(self, user_id):
         """
         根据ID返回一个用户所有曾用名
         :param user_id:用户ID
@@ -43,7 +43,7 @@ class UserProfile:
 
         return list(name_list)
 
-    def get_speak_infos(self, user_id):
+    def _get_speak_infos(self, user_id):
         """
         返回一个用户的发言次数,发言文字数,发言图片数
         :param user_id:用户ID
@@ -60,7 +60,7 @@ class UserProfile:
                     photo_num += sp.count('[图片]')
         return speak_num, word_num, photo_num
 
-    def get_online_time(self, user_id):
+    def _get_online_time(self, user_id):
         """
         返回一个用户在那个时段发言数最多(0-24小时)(周1-7)
         :param user_id:用户ID
@@ -71,7 +71,7 @@ class UserProfile:
             if li['ID'] == user_id:
                 time_list.append(li['time'])
 
-        week_list = [[0] * 24] * 7
+        week_list = [[0 for _ in range(24)] for _ in range(7)]
 
         for li in time_list:
             week_list[int(datetime.strptime(li, "%Y-%m-%d %H:%M:%S").weekday())][int(li[11:13])] += 1
@@ -88,24 +88,23 @@ class UserProfile:
             word_num:发言字数
             photo_num:发布图片数
             week_online:周活跃分布
-            day_online:日活跃分布
         :return:None
         """
         post = self.db.profile
-        user_id_list = self.get_user_id_list()
+        user_id_list = self._get_user_id_list()
         for li in user_id_list:
             print('正在构建用户', li, '的用户画像')
-            name_list = self.get_all_name(li)
-            speak_num, word_num, photo_num = self.get_speak_infos(li)
-            week_online = self.get_online_time(li)
-            ban_time = self.ban_time(li)
+            name_list = self._get_all_name(li)
+            speak_num, word_num, photo_num = self._get_speak_infos(li)
+            week_online = self._get_online_time(li)
+            ban_time = self._ban_time(li)
             post.insert_one({'ID': li, 'name_list': name_list, 'speak_num': speak_num,
                              'word_num': word_num, 'photo_num': photo_num,
                              'week_online': week_online, 'ban_time': ban_time})
         self.close()
 
     # TODO 管理员若解禁则扣除时间
-    def ban_time(self, user_id):
+    def _ban_time(self, user_id):
         """
         统计用户累计禁言时间
         :return:
@@ -123,7 +122,7 @@ class UserProfile:
                             time += int(times[index - 1:index]) * info[1]
             return time
 
-        name_list = self.get_all_name(user_id)
+        name_list = self._get_all_name(user_id)
         res_list = []
         for li in self.post.find({'ID': '10000'}, {'text': 1}):
             if '被管理员禁言' in li['text'][0]:
