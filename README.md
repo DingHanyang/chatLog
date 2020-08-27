@@ -1,8 +1,12 @@
-# ChatLog(重构中)
+# ChatLog
 
 通过QQ导出的QQ群聊天记录进行一定的分析。
 
-just a toy.
+just a toy
+
+## 开发日志
+
+2020-08-27 完成数据处理部分代码清洗，优化部分代码。
 
 ## 基本功能
 
@@ -27,7 +31,7 @@ python版本：`3.6.x`
 
 ### 1.base
 
-- DataClean.py
+- read_chatlog.py
 
   对导出的.txt聊天记录文件进行数据清洗。
 
@@ -42,9 +46,9 @@ python版本：`3.6.x`
   | name | 发送该消息时所使用的马甲 |
   | text | 发送消息的内容      |
 
-  ​
+  
 
-- UserProfile.py
+- user_profile.py
 
   通过清洗好的数据构建用户画像，并保存到mongo数据库中。
 
@@ -64,7 +68,7 @@ python版本：`3.6.x`
 
 
 
-- CutWord.py
+- seg_word.py
 
   通过[jieba](https://github.com/fxsjy/jieba)分词工具将文本进行分析，统计词频并去停用词后保存。
 
@@ -72,19 +76,19 @@ python版本：`3.6.x`
 
   停用词典。
 
-  ​
+  
 
 ### 2.analysis
 
-- Individual.py
+- individual.py
 
   个人数据统计，分析发言次数最多，发送字数最多，发送图片最多，被禁言时长最长的用户。
 
-- Collecticity.py
+- collecticity.py
 
   总体数据分析，分析群活跃时间。
 
-- Interesting.py
+- interesting.py
 
   因吹斯听的分析。
 
@@ -92,15 +96,15 @@ python版本：`3.6.x`
   - 改名次数最多的聚聚
   - 群内队形（+1）次数最多的内容，即使局部打断也可统计。
 
-- Conten.py
+- content.py
 
-  对聊天内容进行分析，由于所用分析数据是一个技（chui）术（bi）群，仅分析了群内常提起的编程语言。
+   开发中
 
 
 
 ### 3.visualization
 
-- Charts.py
+- charts.py
 
   将部分数据可视化。如下：
 
@@ -114,7 +118,7 @@ python版本：`3.6.x`
 
 
 
-- Wordclound.py
+- word_img.py
 
   构建词云。分析群内常用词及部分话题，如下：
 
@@ -144,16 +148,16 @@ python版本：`3.6.x`
 
     ![word5](https://github.com/DingHanyang/chatLog/blob/master/photos/PL_wordcloud.png?raw=true)
 
-    ​
+    
 
 
 ## 运行
 
 0.clone本项目到本地。
 
-1.手动从QQ消息管理器中导出消息，注意改为UTF-8-BOM。并将其命名为chatlog.txt放置于./run/路径下。
+1.手动从QQ消息管理器中导出消息，注意改为UTF-8-BOM。并将其命名为chatlog.txt放置于run.py同级目录下。
 
-2.开启mongodb服务，运行./run/run.py
+2.开启mongodb服务，运行run.py
 
 3.易于修改的参数有：
 
@@ -165,15 +169,7 @@ python版本：`3.6.x`
 
 ## 最后
 
-API设计有些不合理，代码写得有点丑
-
-just a toy
-
-此坑慢慢填。
-
-
-
- 
+填坑中，希望收到改进意见。
 
 
 

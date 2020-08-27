@@ -5,10 +5,10 @@ from chatlog.base.read_chatlog import ReadChatlog
 from chatlog.base.user_profile import UserProfile
 
 if __name__ == '__main__':
-    RC = ReadChatlog('./group1.txt')
-    RC.work()
+    RC = ReadChatlog('./chatlog.txt')
+    RC.work()  # 进行聊天记录的清洗并入库
     UP = UserProfile()
-    UP.work()
+    UP.work()  # 构建简单的用户画像
 
     # Collectivity
     # col = Collectivity()
@@ -16,10 +16,10 @@ if __name__ == '__main__':
 
     # Individual
     # ind = Individual()
-    # print(ind.longest_ban())
-    # print(ind.most_speak('speak_num'))
+    # print(ind.longest_ban())  # 禁言时长排名
+    # print(ind.most_speak('speak_num'))  # 发言次数排名
 
     # Interesting
     # interest = Interesting()
-    # print(interest.longest_formation())
-    # print(interest.longest_name())
+    # print(interest.longest_formation())  # 最长队形排名
+    # print(interest.longest_name())  #  最长马甲排名
