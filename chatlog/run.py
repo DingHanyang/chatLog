@@ -21,5 +21,5 @@ if __name__ == '__main__':
 
     # Interesting
     # interest = Interesting()
-    # print(interest.longest_formation())  # 最长队形排名
+    # print(interest.longest_formation())  # 最长队形的排名
     # print(interest.longest_name())  #  最长马甲排名
