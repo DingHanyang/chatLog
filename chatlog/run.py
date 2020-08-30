@@ -16,10 +16,10 @@ if __name__ == '__main__':
 
     # Individual
     # ind = Individual()
-    # print(ind.longest_ban())  # 禁言时长排名
-    # print(ind.most_speak('speak_num'))  # 发言次数排名
+    # print(ind.longest_ban())  # 禁言时长的排名
+    # print(ind.most_speak('speak_num'))  # 发言次数的排名
 
     # Interesting
     # interest = Interesting()
     # print(interest.longest_formation())  # 最长队形的排名
-    # print(interest.longest_name())  #  最长马甲排名
+    # print(interest.longest_name())  #  最长的马甲排名
