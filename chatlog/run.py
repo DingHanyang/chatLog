@@ -1,8 +1,9 @@
-from chatlog.analysis.collectivity import Collectivity
-from chatlog.analysis.individual import Individual
-from chatlog.analysis.interesting import Interesting
-from chatlog.base.read_chatlog import ReadChatlog
-from chatlog.base.user_profile import UserProfile
+from analysis.collectivity import Collectivity
+from analysis.individual import Individual
+from analysis.interesting import Interesting
+from base.read_chatlog import ReadChatlog
+from base.user_profile import UserProfile
+from datetime import datetime
 
 if __name__ == '__main__':
     RC = ReadChatlog('./chatlog.txt')

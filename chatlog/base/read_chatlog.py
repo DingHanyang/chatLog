@@ -1,7 +1,7 @@
 import re
 from pymongo import MongoClient
 
-from chatlog.base import constant
+from base import constant
 
 
 class ReadChatlog(object):
