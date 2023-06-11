@@ -10,6 +10,10 @@ if __name__ == '__main__':
     RC.work()  # 进行聊天记录的清洗并入库
     UP = UserProfile()
     UP.work()  # 构建简单的用户画像
+        
+    EX = Interesting()
+    EX.count_images_by_month(start_date=datetime(
+        2023, 2, 1), end_date=datetime(2023, 7, 1))  # 统计每月的图片数量
 
     # Collectivity
     # col = Collectivity()
