@@ -1,14 +1,19 @@
-from chatlog.analysis.collectivity import Collectivity
-from chatlog.analysis.individual import Individual
-from chatlog.analysis.interesting import Interesting
-from chatlog.base.read_chatlog import ReadChatlog
-from chatlog.base.user_profile import UserProfile
+from analysis.collectivity import Collectivity
+from analysis.individual import Individual
+from analysis.interesting import Interesting
+from base.read_chatlog import ReadChatlog
+from base.user_profile import UserProfile
+from datetime import datetime
 
 if __name__ == '__main__':
     RC = ReadChatlog('./chatlog.txt')
     RC.work()  # 进行聊天记录的清洗并入库
     UP = UserProfile()
     UP.work()  # 构建简单的用户画像
+        
+    EX = Interesting()
+    EX.count_images_by_month(start_date=datetime(
+        2023, 2, 1), end_date=datetime(2023, 7, 1))  # 统计每月的图片数量
 
     # Collectivity
     # col = Collectivity()
